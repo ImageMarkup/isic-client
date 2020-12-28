@@ -1,6 +1,6 @@
 {
   "name": "@isic/client",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "",
   "main": "dist/isic-client.js",
   "types": "dist/isic-client.d.ts",
