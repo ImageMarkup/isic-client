@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@girder/oauth-client@^0.7.1":
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/@girder/oauth-client/-/oauth-client-0.7.1.tgz#367b469e0c5836f62c2bd7b92b8bfb0c1b3bad45"
+  integrity sha512-wQrcUGf91HjWO53ib7HRrxl5U9P0JWEzJ5yh0+oU1mqhBPwoMqgnaM6U38x86fYsdOqKavI72yd9BJ+lWDm9uA==
+  dependencies:
+    "@openid/appauth" "^1.3.0"
+
 "@openid/appauth@^1.3.0":
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@openid/appauth/-/appauth-1.3.0.tgz#3fe5b2621b627f048b348cc6942b84db3891be95"
@@ -13,6 +20,11 @@
     follow-redirects "^1.13.0"
     form-data "^3.0.0"
     opener "^1.5.2"
+
+"@tsconfig/recommended@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@tsconfig/recommended/-/recommended-1.0.1.tgz#7619bad397e06ead1c5182926c944e0ca6177f52"
+  integrity sha512-2xN+iGTbPBEzGSnVp/Hd64vKJCJWxsi9gfs88x4PPMyEjHJoA3o5BY9r5OLPHIZU2pAQxkSAsJFqn6itClP8mQ==
 
 "@types/base64-js@^1.3.0":
   version "1.3.0"
@@ -54,9 +66,9 @@ delayed-stream@~1.0.0:
   integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
 
 follow-redirects@^1.13.0:
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.0.tgz#b42e8d93a2a7eea5ed88633676d6597bc8e384db"
-  integrity sha512-aq6gF1BEKje4a9i9+5jimNFIpq4Q1WiwBToeRK5NvZBd/TRsmW8BsJfOEGkr76TbOyPVD3OVDN910EcUNtRYEA==
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.1.tgz#5f69b813376cee4fd0474a3aba835df04ab763b7"
+  integrity sha512-SSG5xmZh1mkPGyKzjZP8zLjltIfpW32Y5QpdNJyjcfGxK3qo3NDDkZOZSFiGn1A6SclQxY9GzEwAHQ3dmYRWpg==
 
 form-data@^3.0.0:
   version "3.0.0"
@@ -84,7 +96,7 @@ opener@^1.5.2:
   resolved "https://registry.yarnpkg.com/opener/-/opener-1.5.2.tgz#5d37e1f35077b9dcac4301372271afdeb2a13598"
   integrity sha512-ur5UIdyw5Y7yEj9wLzhqXiy6GZ3Mwx0yGI+5sMn2r0N0v3cKJvUmFH5yPP+WXh9e0xfyzyJX95D8l088DNFj7A==
 
-typescript@^4.1.2:
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.1.2.tgz#6369ef22516fe5e10304aae5a5c4862db55380e9"
-  integrity sha512-thGloWsGH3SOxv1SoY7QojKi0tc+8FnOmiarEGMbd/lar7QOEd3hvlx3Fp5y6FlDUGl9L+pd4n2e+oToGMmhRQ==
+typescript@^4.1.3:
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.1.3.tgz#519d582bd94cba0cf8934c7d8e8467e473f53bb7"
+  integrity sha512-B3ZIOf1IKeH2ixgHhj6la6xdwR9QrLC5d1VKeCSY4tvkqhF2eqd9O7txNlS0PO3GrBAFIdr3L1ndNwteUbZLYg==
