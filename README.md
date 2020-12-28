@@ -1,78 +1,96 @@
 # ISIC Client
-
-A client library for authenticating with the ISIC Archive from a SPA (single page application).
-
 [![npm (scoped)](https://img.shields.io/npm/v/@isic/client)](https://www.npmjs.com/package/@isic/client)
 
-
-## Description
-
-The ISIC client provides support for authenticating with the ISIC Archive using the Auth Code with PKCE flow of OAuth2.0.
+A client library for authenticating with the ISIC Archive from an SPA (single page application).
 
 ## Usage
+* Install the library:
+  ```bash
+  yarn add @isic/client
+  ```
 
-```bash
-$ npm install @isic/client
+  or if you're using npm:
+  ```bash
+  npm install @isic/client
+  ```
 
-```
+* Instantiate an `IsicClient` with your application-specific configuration:
+  ```js
+  import IsicClient from '@isic/client';
 
-or if you're using yarn:
-```bash
-$ yarn add @isic/client
-```
+  const isicClient = new IsicClient(
+    process.env.CLIENT_ID, // e.g. 'v1odYySCetBht6DT9svQdAkvmVXrRHOwIIGNk6JG'
+  );
+  ```
 
-```js
-// create an isic client
-// when running the app pass the CLIENT_ID as an environment var
-const client = new IsicClient(process.env.CLIENT_ID);
+  or if connecting to the sandbox server:
+  ```js
+  const isicClient = new IsicClient(
+    process.env.CLIENT_ID,
+    'https://api-sandbox.isic-archive.com',
+  );
+  ```
 
-// or, if connecting to the sandbox:
-// const client = new IsicClient(process.env.CLIENT_ID, 'https://api-sandbox.isic-archive.com');
-```
-
-```js
-// handle the client signing in
-document.querySelector('#sign-in-link').addEventListener('click', (event) => {
+* Call `redirectToLogin` when it's time to start a login flow:
+  ```js
+  document.querySelector('#sign-in-link').addEventListener('click', (event) => {
     event.preventDefault();
-    client.redirectToLogin();
-});
-```
+    isicClient.redirectToLogin();
+    // This will redirect away from the current page
+  });
+  ```
 
-```js
-// load the proper token on each page load
-let legacyToken;
-client.maybeRestoreLogin()
-  .then(() => {
-    if (client.isLoggedIn) {
-      return client.getLegacyToken();
-    } else {
-      return null;
-    }
-  })
-  .then((_legacyToken) => {
-    legacyToken = _legacyToken;
-  })
-```
+* At the start of *every* page load, unconditionally call `maybeRestoreLogin`, to attempt to
+  restore a login state; this will no-op if no login is present. Afterwards, get and store HTTP
+  headers for new API accesses from `authHeaders`. Finally, if the client is logged in, get and store
+  a token for legacy API accesses from `getLegacyToken`.
+  ```js
+  let authHeaders;
+  let legacyToken;
+  isicClient.maybeRestoreLogin()
+    .then(() => {
+      authHeaders = isicClient.authHeaders;
+    })
+    .then(() => {
+      if (isicClient.isLoggedIn) {
+        return isicClient.getLegacyToken();
+      } else {
+        return null;
+      }
+    })
+    .then((_legacyToken) => {
+      legacyToken = _legacyToken;
+    })
+  ```
 
-```js
-// handle the client signing out
-document.querySelector('#sign-out-link').addEventListener('click', (event) => {
+  or, if using ES6 and `async`/`await`:
+  ```js
+  await isicClient.maybeRestoreLogin();
+  let { authHeaders } = isicClient;
+  let legacyToken = isicClient.isLoggedIn ? await isicClient.getLegacyToken() : null;
+  ```
+
+* Use these credentials for Ajax API requests:
+  ```js
+  fetch('https://api.isic-archive.com/api/v2/studies/', {
+    headers: authHeaders,
+  });
+
+  fetch('https://isic-archive.com/api/v1/studies/', {
+    headers: {
+      'Girder-Token': legacyToken,
+    },
+  });
+  ```
+
+* The login state will persist across page refreshes. Call `logout` to clear any active login:
+  ```js
+  document.querySelector('#sign-out-link').addEventListener('click', (event) => {
     event.preventDefault();
-    client.logout();
-});
-```
-
-## Example app
-
-This repository comes bundled with an [example application](example/index.html). 
-
-```bash
-$ git clone git@github.com:ImageMarkup/isic-client.git
-$ cd example
-$ yarn install
-$ yarn serve
-
-# visit http://localhost:1234/
-```
-
-
+    isicClient.logout()
+      .then(() => {
+        authHeaders = isicClient.authHeaders;
+        legacyToken = null;
+      });
+  });
+  ```
