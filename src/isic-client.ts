@@ -1,11 +1,11 @@
 import OauthClient from '@girder/oauth-client';
 
-export default class IsicClient extends OauthClient{
+export default class IsicClient extends OauthClient {
   protected readonly isicBaseUrl: string;
 
   constructor(
     clientId: string,
-    isicBaseUrl = 'https://api.isic-archive.com'
+    isicBaseUrl = 'https://api.isic-archive.com',
   ) {
     const trimmedIsicBaseUrl = isicBaseUrl.replace(/\/$/, '');
     super(`${trimmedIsicBaseUrl}/oauth/`, clientId);
@@ -17,10 +17,10 @@ export default class IsicClient extends OauthClient{
       headers: this.authHeaders,
       mode: 'cors',
       credentials: 'omit',
-    }
+    };
   }
 
-  public async fetchJson<T>(endpoint: string, method='GET'): Promise<T> {
+  public async fetchJson<T>(endpoint: string, method = 'GET'): Promise<T> {
     const canonicalEndpoint = endpoint
       .replace(/^\//, '')
       .replace(/\/$/, '')
@@ -31,7 +31,7 @@ export default class IsicClient extends OauthClient{
     });
     if (!resp.ok) {
       const text = await resp.text();
-      throw new Error(`Request error: ${resp.status}: ${text}`)
+      throw new Error(`Request error: ${resp.status}: ${text}`);
     }
     return resp.json();
   }
@@ -40,8 +40,7 @@ export default class IsicClient extends OauthClient{
     interface LegacyTokenResponse {
       token: string;
     }
-    const resp =
-      await this.fetchJson<LegacyTokenResponse>(`api/v2/token/legacy`, 'POST');
+    const resp = await this.fetchJson<LegacyTokenResponse>('api/v2/token/legacy', 'POST');
     return resp.token;
   }
 }
