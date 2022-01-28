@@ -6,7 +6,7 @@ export default class IsicClient extends OauthClient {
   constructor(
     clientId: string,
     isicBaseUrl: string = 'https://api.isic-archive.com',
-    scopes: Array<string> = [],
+    scopes: string[] = [],
   ) {
     const trimmedIsicBaseUrl = isicBaseUrl.replace(/\/$/, '');
     super(
