@@ -8,7 +8,10 @@ export default class IsicClient extends OauthClient {
     isicBaseUrl = 'https://api.isic-archive.com',
   ) {
     const trimmedIsicBaseUrl = isicBaseUrl.replace(/\/$/, '');
-    super(`${trimmedIsicBaseUrl}/oauth/`, clientId);
+    super(
+      new URL(`${trimmedIsicBaseUrl}/oauth/`),
+      clientId,
+    );
     this.isicBaseUrl = trimmedIsicBaseUrl;
   }
 
