@@ -2,8 +2,10 @@ import IsicClient from '@isic/client';
 
 const isicClient = new IsicClient(
   'v1odYySCetBht6DT9svQdAkvmVXrRHOwIIGNk6JG',
-  'https://api-sandbox.isic-archive.com/',
-  ['identity'],
+  {
+    isicBaseUrl: 'https://api-sandbox.isic-archive.com/',
+    scopes: ['identity'],
+  },
 );
 let legacyToken;
 

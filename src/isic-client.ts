@@ -1,12 +1,19 @@
 import OauthClient from '@girder/oauth-client';
 
+export interface IsicClientOptions {
+  isicBaseUrl?: string;
+  scopes?: string[];
+}
+
 export default class IsicClient extends OauthClient {
   protected readonly isicBaseUrl: string;
 
   constructor(
     clientId: string,
-    isicBaseUrl = 'https://api.isic-archive.com',
-    scopes: string[] = [],
+    {
+      isicBaseUrl = 'https://api.isic-archive.com',
+      scopes = [],
+    }: IsicClientOptions = {},
   ) {
     const trimmedIsicBaseUrl = isicBaseUrl.replace(/\/$/, '');
     super(
