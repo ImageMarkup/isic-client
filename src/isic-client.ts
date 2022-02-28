@@ -3,6 +3,7 @@ import OauthClient from '@girder/oauth-client';
 export interface IsicClientOptions {
   isicOrigin?: URL;
   scopes?: string[];
+  redirectUrl?: URL;
 }
 
 export default class IsicClient extends OauthClient {
@@ -12,7 +13,8 @@ export default class IsicClient extends OauthClient {
     clientId: string,
     {
       isicOrigin = new URL('https://api.isic-archive.com'),
-      scopes = [],
+      scopes,
+      redirectUrl,
     }: IsicClientOptions = {},
   ) {
     const cleanedIsicOrigin = new URL(isicOrigin);
@@ -26,6 +28,7 @@ export default class IsicClient extends OauthClient {
       clientId,
       {
         scopes,
+        redirectUrl,
       },
     );
     this.isicOrigin = cleanedIsicOrigin;
