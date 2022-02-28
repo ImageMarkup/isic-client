@@ -28,7 +28,7 @@ A client library for authenticating with the ISIC Archive from an SPA (single pa
   const isicClient = new IsicClient(
     process.env.CLIENT_ID,
     {
-      isicBaseUrl: 'https://api-sandbox.isic-archive.com',
+      isicOrigin: new URL('https://api-sandbox.isic-archive.com'),
     },
   );
   ```

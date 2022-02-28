@@ -1,29 +1,34 @@
 import OauthClient from '@girder/oauth-client';
 
 export interface IsicClientOptions {
-  isicBaseUrl?: string;
+  isicOrigin?: URL;
   scopes?: string[];
 }
 
 export default class IsicClient extends OauthClient {
-  protected readonly isicBaseUrl: string;
+  protected readonly isicOrigin: URL;
 
   constructor(
     clientId: string,
     {
-      isicBaseUrl = 'https://api.isic-archive.com',
+      isicOrigin = new URL('https://api.isic-archive.com'),
       scopes = [],
     }: IsicClientOptions = {},
   ) {
-    const trimmedIsicBaseUrl = isicBaseUrl.replace(/\/$/, '');
+    const cleanedIsicOrigin = new URL(isicOrigin);
+    // Origin cannot have path, query string, or fragment components
+    cleanedIsicOrigin.pathname = '';
+    cleanedIsicOrigin.search = '';
+    cleanedIsicOrigin.hash = '';
+
     super(
-      new URL(`${trimmedIsicBaseUrl}/oauth/`),
+      new URL(`${cleanedIsicOrigin}/oauth/`),
       clientId,
       {
         scopes,
       },
     );
-    this.isicBaseUrl = trimmedIsicBaseUrl;
+    this.isicOrigin = cleanedIsicOrigin;
   }
 
   protected get fetchOptions(): RequestInit {
@@ -39,7 +44,7 @@ export default class IsicClient extends OauthClient {
       .replace(/^\//, '')
       .replace(/\/$/, '')
       .concat('/');
-    const resp = await fetch(`${this.isicBaseUrl}/${canonicalEndpoint}`, {
+    const resp = await fetch(`${this.isicOrigin}/${canonicalEndpoint}`, {
       ...this.fetchOptions,
       method,
     });

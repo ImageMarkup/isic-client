@@ -3,7 +3,7 @@ import IsicClient from '@isic/client';
 const isicClient = new IsicClient(
   'v1odYySCetBht6DT9svQdAkvmVXrRHOwIIGNk6JG',
   {
-    isicBaseUrl: 'https://api-sandbox.isic-archive.com/',
+    isicOrigin: new URL('https://api-sandbox.isic-archive.com/'),
     scopes: ['identity'],
   },
 );
