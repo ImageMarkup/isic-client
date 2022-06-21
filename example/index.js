@@ -7,7 +7,6 @@ const isicClient = new IsicClient(
     scopes: ['identity'],
   },
 );
-let legacyToken;
 
 function updateDom() {
   document.querySelector('#sign-in-link').style.visibility =
@@ -17,7 +16,6 @@ function updateDom() {
 
   document.querySelector('#logged-in').innerHTML = JSON.stringify(isicClient.isLoggedIn);
   document.querySelector('#auth-headers').innerHTML = JSON.stringify(isicClient.authHeaders);
-  document.querySelector('#legacy-token').innerHTML = JSON.stringify(legacyToken);
 }
 
 document.querySelector('#sign-in-link')
@@ -29,23 +27,10 @@ document.querySelector('#sign-out-link')
   .addEventListener('click', (event) => {
     event.preventDefault();
     isicClient.logout()
-      .then(() => {
-        legacyToken = null;
-      })
       .then(updateDom);
   });
 
 updateDom();
 
 isicClient.maybeRestoreLogin()
-  .then(() => {
-    if (isicClient.isLoggedIn) {
-      return isicClient.getLegacyToken();
-    } else {
-      return null;
-    }
-  })
-  .then((_legacyToken) => {
-    legacyToken = _legacyToken;
-  })
   .then(updateDom);

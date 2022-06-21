@@ -57,12 +57,4 @@ export default class IsicClient extends OauthClient {
     }
     return resp.json();
   }
-
-  public async getLegacyToken(): Promise<string> {
-    interface LegacyTokenResponse {
-      token: string;
-    }
-    const resp = await this.fetchJson<LegacyTokenResponse>('api/v2/token/legacy', 'POST');
-    return resp.token;
-  }
 }
